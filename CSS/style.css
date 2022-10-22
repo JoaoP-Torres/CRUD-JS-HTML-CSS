@@ -1,0 +1,26 @@
+body {
+  background-color: rgb(45, 211, 111);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  height: 400px;
+}
+
+input,
+button {
+  padding: 10px;
+  width: -webkit-fill-available;
+}
+
+button {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.form-field {
+  margin-bottom: 10px;
+}
