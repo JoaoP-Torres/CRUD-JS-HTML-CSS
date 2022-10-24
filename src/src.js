@@ -57,8 +57,22 @@ const form = {
 };
 
 function login() {
-  window.location.href = "views/home.html";
+  showLoading();
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(form.email().value, form.password().value)
+    .then((response) => {
+      hideLoading();
+      window.location.href = "views/home.html";
+    })
+    .catch((error) => {
+      hideLoading();
+      alert(error.message);
+    });
+
+  //window.location.href = "views/home.html";
 }
 function register() {
+  showLoading();
   window.location.href = "views/register.html";
 }

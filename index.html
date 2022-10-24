@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/CSS/global.css" />
     <title>CRUD - JS-HTML-CSS</title>
   </head>
-  <body>
+  <body class="centralize">
     <form>
       <div class="form-field">
         <div><label>Email</label></div>
@@ -64,4 +64,18 @@
 
   <script src="/src/src.js"></script>
   <script src="/src/validations.js"></script>
+  <script src="/src/loading.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "*******************************",
+      authDomain: "*******************************",
+      projectId: "*******************************",
+      storageBucket: "*******************************",
+      messagingSenderId: "*******************************",
+      appId: "*******************************",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </html>
