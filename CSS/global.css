@@ -49,3 +49,13 @@ button[disabled] {
   width: 100%;
   height: 100%;
 }
+
+.form-field {
+  margin-bottom: 10px;
+}
+
+input,
+button {
+  padding: 10px;
+  width: -webkit-fill-available;
+}
