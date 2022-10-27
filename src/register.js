@@ -1,3 +1,9 @@
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    window.location.href = "views/home.html";
+  }
+});
+
 function onChangeEmail() {
   const email = form.email().value;
   form.emailRequiredError().style.display = email ? "none" : "block";
@@ -55,6 +61,21 @@ function isFormValid() {
   }
 
   return true;
+}
+
+function registerUser() {
+  showLoading();
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(form.email().value, form.password().value)
+    .then((response) => {
+      hideLoading();
+      window.location.href = "../views/home.html";
+    })
+    .catch((error) => {
+      hideLoading();
+      alert(error.message);
+    });
 }
 
 const form = {
