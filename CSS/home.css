@@ -1,0 +1,34 @@
+header button {
+  width: auto;
+}
+header {
+  text-align: right;
+}
+
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+ol li {
+  cursor: pointer;
+  background: white;
+  padding: 8px 16px;
+  border-bottom: 1px solid grey;
+}
+
+ol li:hover {
+  opacity: 0.8;
+}
+
+p {
+  margin: 4px 0;
+}
+
+ol li.expense {
+  border-left: 10px solid red;
+}
+
+ol li.income {
+  border-left: 10px solid green;
+}
