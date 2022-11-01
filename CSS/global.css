@@ -49,6 +49,7 @@ button[disabled] {
   position: fixed;
   width: 100%;
   height: 100%;
+  top: 0;
 }
 
 .form-field {
@@ -56,9 +57,14 @@ button[disabled] {
 }
 
 input,
-button {
+button,
+select {
   padding: 10px;
   width: -webkit-fill-available;
+}
+
+input[type="radio"] {
+  width: auto;
 }
 
 button.fab {
@@ -80,4 +86,11 @@ button.fab.bottom {
 
 button.fab.right {
   right: 32px;
+}
+
+header button {
+  width: auto;
+}
+header {
+  text-align: right;
 }
