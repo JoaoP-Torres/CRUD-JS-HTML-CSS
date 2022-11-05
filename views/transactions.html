@@ -40,7 +40,7 @@
           <div>
             <label>Moeda *</label>
           </div>
-          <select>
+          <select id="currency">
             <option value="USD">Dólar</option>
             <option value="EUR">Euro</option>
             <option value="BRL" selected>Real</option>
@@ -80,10 +80,16 @@
           <div>
             <label>Descrição</label>
           </div>
-          <input type="text" />
+          <input type="text" id="description" />
         </div>
 
-        <button type="button" class="solid" disabled id="save-button">
+        <button
+          type="button"
+          class="solid"
+          disabled
+          id="save-button"
+          onclick="saveTransaction()"
+        >
           Salvar
         </button>
         <button type="button" class="clear">Cancelar</button>
@@ -96,6 +102,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
   <script src="/src/firebase-init.js"></script>
   <script src="/src/auth-guard.js"></script>
-  <script src="/src/transaction.js"></script>
+  <script src="/services/transactions-service.js"></script>
   <script src="/src/loading.js"></script>
+  <script src="/src/transaction.js"></script>
 </html>

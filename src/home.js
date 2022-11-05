@@ -6,72 +6,102 @@ function logout() {
       window.location.href = "../index.html";
     })
     .catch(() => {
-      alert("Erro ao fazer Logout");
+      alert("Erro ao fazer logout");
     });
 }
-
-function newTransaction() {
-  window.location.href = "../views/transactions.html";
-}
-
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     findTransactions(user);
   }
 });
-
+function newTransaction() {
+  window.location.href = "../views/transactions.html";
+}
 function findTransactions(user) {
   showLoading();
-  firebase
-    .firestore()
-    .collection("transactions")
-    .where("user.uid", "==", user.uid)
-    .orderBy("date", "desc")
-    .get()
-    .then((snapshot) => {
+  transactionService
+    .findByUser(user)
+    .then((transaction) => {
       hideLoading();
-      const transactions = snapshot.docs.map((doc) => doc.data());
-      addTransactionsToScreen(transactions);
+      addTransactionsToScreen(transaction);
     })
     .catch((error) => {
       hideLoading();
-      console.log(error.message);
+      console.log(error);
+      alert("Erro ao recuperar transacoes");
     });
 }
-
 function addTransactionsToScreen(transactions) {
   const orderedList = document.getElementById("transactions");
 
   transactions.forEach((transaction) => {
-    const li = document.createElement("li");
-    li.classList.add(transaction.type);
+    const li = creationTransactionListItem(transaction);
 
-    const date = document.createElement("p");
-    date.innerHTML = formatDate(transaction.date);
-    li.appendChild(date);
+    li.appendChild(createDeleteButton(transaction));
 
-    const money = document.createElement("p");
-    money.innerHTML = formatMoney(transaction.money);
-    li.appendChild(money);
-
-    const type = document.createElement("p");
-    type.innerHTML = transaction.transactionType;
-    li.appendChild(type);
-
+    li.appendChild(createParagraph(formatDate(transaction.date)));
+    li.appendChild(createParagraph(formatMoney(transaction.money)));
+    li.appendChild(createParagraph(transaction.transactionType));
     if (transaction.description) {
-      const description = document.createElement("p");
-      description.innerHTML = transaction.description;
-      li.appendChild(description);
+      li.appendChild(createParagraph(transaction.description));
     }
-
     orderedList.appendChild(li);
   });
+}
+
+function creationTransactionListItem(transaction) {
+  const li = document.createElement("li");
+  li.classList.add(transaction.type);
+  li.id = transaction.uid;
+  li.addEventListener("click", () => {
+    window.location.href = "transactions.html?uid=" + transaction.uid;
+  });
+  return li;
+}
+
+function createDeleteButton(transaction) {
+  const deleteButton = document.createElement("button");
+  deleteButton.innerHTML = "Remover";
+  deleteButton.classList.add("outline", "danger");
+  deleteButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    askRemoveTransaction(transaction);
+  });
+  return deleteButton;
+}
+
+function createParagraph(value) {
+  const element = document.createElement("p");
+  element.innerHTML = value;
+  return element;
+}
+
+function askRemoveTransaction(transaction) {
+  const shouldRemove = confirm("Deseja remover a transaçao?");
+  if (shouldRemove) {
+    removeTransaction(transaction);
+  }
+}
+
+function removeTransaction(transaction) {
+  showLoading();
+
+  transactionService
+    .remove(transaction)
+    .then(() => {
+      hideLoading();
+      document.getElementById(transaction.uid).remove();
+    })
+    .catch((error) => {
+      hideLoading();
+      console.log(error);
+      alert("Erro ao remover transaçao");
+    });
 }
 
 function formatDate(date) {
   return new Date(date).toLocaleDateString("pt-br");
 }
-
 function formatMoney(money) {
   return `${money.currency} ${money.value.toFixed(2)}`;
 }

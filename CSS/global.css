@@ -94,3 +94,8 @@ header button {
 header {
   text-align: right;
 }
+
+.outline.danger {
+  color: red;
+  border-color: red;
+}

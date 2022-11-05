@@ -25,3 +25,13 @@ ol li.expense {
 ol li.income {
   border-left: 10px solid green;
 }
+
+button.danger {
+  width: auto;
+  float: right;
+  display: none;
+}
+
+ol li:hover button.danger {
+  display: block;
+}
